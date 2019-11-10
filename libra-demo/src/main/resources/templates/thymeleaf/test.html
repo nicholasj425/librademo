@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8" />
+<title></title>
+
+<!-- 	<script th:src="@{/static/js/test.js}"></script> -->
+
+</head>
+<body>
+
+
+
+	<br />
+	<table>
+		<tr>
+			<th>姓名</th>
+			<th>性别</th>
+			<th>体重</th>
+			<th>职称</th>
+		</tr>
+		<tr th:each="person:${userList}">
+			<td th:text="${person.username}"></td>
+			<td th:text="${person.sex}"></td>
+			<td th:text="${person.weight}"></td>
+			<td th:text="${person.jobtitle}"></td>
+		</tr>
+	</table>
+	<br />
+
+	<table>
+		<tr>
+			<th>性别</th>
+
+		</tr>
+		<tr th:each="sexdata:${sexList}">
+			<td th:text="${sexdata.ddvalue}"></td>
+		</tr>
+	</table>
+	<br />
+
+	<table>
+		<tr>
+			<th>JobTile Key</th>
+			<th>JobTile</th>
+
+		</tr>
+		<tr th:each="titledata:${titleList}">
+			<td th:text="${titledata.ddkey}"></td>
+			<td th:text="${titledata.ddvalue}"></td>
+		</tr>
+	</table>
+	<br />
+
+</body>
+</html>
