@@ -15,6 +15,8 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+CREATE DATABASE `libra` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+
 --
 -- Table structure for table `data_dict`
 --
@@ -39,7 +41,7 @@ CREATE TABLE `data_dict` (
 
 LOCK TABLES `data_dict` WRITE;
 /*!40000 ALTER TABLE `data_dict` DISABLE KEYS */;
-INSERT INTO `data_dict` VALUES (1,'sex','sex','0','female',1),(2,'sex','sex','1','male',1),(3,'jobtitle','job','1','Chairman',1),(4,'jobtitle','job','2','Director',1),(5,'jobtitle','job','3','Project Manager',1),(6,'jobtitle','job','4','Developer',1),(7,'jobtitle','job','5','HR',1);
+INSERT INTO `data_dict` VALUES (1,'sex','sex','0','Female',1),(2,'sex','sex','1','Male',1),(3,'jobtitle','job','1','Chairman',1),(4,'jobtitle','job','2','Director',1),(5,'jobtitle','job','3','Project Manager',1),(6,'jobtitle','job','4','Developer',1),(7,'jobtitle','job','5','HR',1);
 /*!40000 ALTER TABLE `data_dict` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +60,7 @@ CREATE TABLE `user` (
   `jobtitle` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +69,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'test1',0,'60','2','0'),(2,'test2',1,'45','3','0'),(4,'Test6',1,NULL,'abd',NULL);
+INSERT INTO `user` VALUES (1,'test1',0,'60','2','0'),(2,'test2',1,'45','3','0'),(4,'Test6',1,'78.8888','1','0'),(5,'test5',0,'46.7898','4','0');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -80,4 +82,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-11  0:10:54
+-- Dump completed on 2019-11-11 23:38:16
