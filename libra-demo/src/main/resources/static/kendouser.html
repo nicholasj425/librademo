@@ -60,6 +60,10 @@
 				}
 			});
 
+			dataSex.fetch(function() {
+				var data = dataSex.data();
+			});
+
 			var dataJob = new kendo.data.DataSource({
 				transport : {
 					read : {
@@ -88,6 +92,10 @@
 				}
 			});
 
+			dataJob.fetch(function() {
+				var data = dataJob.data();
+			});
+
 			var dataSource = new kendo.data.DataSource({
 				transport : {
 					read : {
@@ -114,7 +122,22 @@
 					},
 					total : function(d) {
 						return d.total;
+					},
+					model : {
+						id : "id",
+						fields : {
+							"id" : {
+								type : "number"
+							},
+							"sex" : {
+								type : "string"
+							},
+							"weight" : {
+								type : "number"
+							}
+						}
 					}
+
 				},
 				serverPaging : true
 			});
@@ -138,29 +161,55 @@
 					title : "UserName"
 				}, {
 					field : "sex",
-					title : "Sex"
+					title : "Sex",
+					template : function(data) {
+						var dataS = dataSex.data();
+
+						var template = "";
+						for (var i = 0, len = dataS.length; i < len; i++) {
+							if (data.sex == dataS[i].ddkey) {
+								template = dataS[i].ddvalue;
+							}
+						}
+
+						return template;
+					}
 				}, {
 					field : "weight",
 					title : "Weight",
+					template : '#= kendo.toString(weight, "N3") #',
 					width : 150
 				}, {
 					field : "jobtitle",
 					title : "Job Title",
+					template : function(data) {
+						var dataS = dataJob.data();
+						var template = "";
+						for (var i = 0, len = dataS.length; i < len; i++) {
+							if (data.jobtitle == dataS[i].ddkey) {
+								template = dataS[i].ddvalue;
+							}
+						}
+						return template;
+					},
 					width : 150
-				} ]
+				} ],
+				editable : true,
 			});
 
 			$("#jobtitle").kendoComboBox({
 				dataTextField : "ddvalue",
 				dataValueField : "ddkey",
 				dataSource : dataJob,
-				filter : "contains" // 包括：eq,neq,gt,gte,lt,lte,startswith,endswith,contains,doesnotcontain
-			//index: 1 // 默认选中项索引，索引从0开始。
+				filter : "contains", // 包括：eq,neq,gt,gte,lt,lte,startswith,endswith,contains,doesnotcontain
+				//index: 1 // 默认选中项索引，索引从0开始。
+				change : function(e) {
+					var value = this.value();
+					// Use the value of the widget
+				}
 			});
 
-			$("#datadd").text(dataJob);
 		});
 	</script>
-
 </body>
 </html>
