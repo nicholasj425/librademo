@@ -17,15 +17,8 @@
 <body>
 
 	<div id="example">
-		<p>
-			Hello This is version <strong id="kendoVersion"></strong>.
-		</p>
-		<p>Data Source</p>
-
-		<div id="datadd"></div>
 		<input id="jobtitle" placeholder="Select Job Title..." />
 		<div id="grid"></div>
-
 	</div>
 
 	<script>
@@ -127,10 +120,12 @@
 						id : "id",
 						fields : {
 							"id" : {
-								type : "number"
+								type : "number",
+								editable : false
 							},
 							"sex" : {
-								type : "string"
+								type : "string",
+								editable : false
 							},
 							"weight" : {
 								type : "number"
@@ -158,27 +153,45 @@
 					width : 240
 				}, {
 					field : "username",
-					title : "UserName"
+					title : "UserName",
+					template: function(data) {
+						var template = "";
+						$("#datalog").text(data.jobtitle);
+						if(data.jobtitle == "1"){
+							template = "<span style='color:red'>" + data.username + "</span>";
+						}else{
+							template = data.username;
+						}
+						$("#datalog2").text(template);
+						return template;
+					}					
 				}, {
 					field : "sex",
 					title : "Sex",
 					template : function(data) {
 						var dataS = dataSex.data();
-
-						var template = "";
+						var cell = "";
+						
 						for (var i = 0, len = dataS.length; i < len; i++) {
+							var item = "";
+			                item += "<label>"
 							if (data.sex == dataS[i].ddkey) {
-								template = dataS[i].ddvalue;
+								item += "<input type='radio' name='" + data.id + "' checked=checked />";
+							}else{
+								item += "<input type='radio' name='" + data.id + "' />";
 							}
+			                item += dataS[i].ddvalue;
+			                item += "</label>"
+			                item += "</br>";
+			                cell += item;
 						}
-
-						return template;
-					}
+						return cell;
+					}					
 				}, {
 					field : "weight",
 					title : "Weight",
 					template : '#= kendo.toString(weight, "N3") #',
-					width : 150
+					width : 150					
 				}, {
 					field : "jobtitle",
 					title : "Job Title",
@@ -192,9 +205,10 @@
 						}
 						return template;
 					},
+					editor: roleDropDownEditor,
 					width : 150
 				} ],
-				editable : true,
+				editable : true
 			});
 
 			$("#jobtitle").kendoComboBox({
@@ -205,10 +219,59 @@
 				//index: 1 // 默认选中项索引，索引从0开始。
 				change : function(e) {
 					var value = this.value();
-					$("#grid").data("kendoGrid").dataSource.filter({});
+					
+					if (value) {
+						$("#grid").data("kendoGrid").dataSource.filter({
+							field : "jobtitle",
+							operator : "eq",
+							value : value
+						});
+					}else{
+						$("#grid").data("kendoGrid").dataSource.filter({});
+					}
 					// Use the value of the widget
 				}
 			});
+			
+			 function templateFunction(dataItem) {
+		            var cell = "";
+		            var dataS = dataSex.data();
+
+		            for (var i = 0; i < dataS.length; i++) {
+		                var item = "";
+
+		                item += "<label>"
+		                if (dataItem.sex == dataS[i].ddkey) {
+		                    item += "<input type='radio' name='" + dataS[i].ddkey + "' checked=checked />";
+		                } else {
+		                    item += "<input type='radio' name='" + dataS[i].ddkey + "' />";
+		                }
+		                item += dataS[i].ddvalue;
+		                item += "</label>"
+		                item += "</br>";
+
+		                cell += item;
+		            }
+		            return cell;
+		        };
+
+			
+			function roleDropDownEditor(container, options) {
+		        //console.log(options);
+		        var roleDroplist = $('<input required id="ddkey" data-text-field="ddvalue" data-value-field="ddkey" data-bind="value:' + options.field + '"/>')
+		            .appendTo(container).kendoDropDownList({
+		                valuePrimitive: true,
+		                dataTextField: "ddvalue",
+		                dataValueField: "ddkey",
+		                dataSource: dataJob
+		                
+		            });
+		       // console.log(roleDroplist.data("kendoDropDownList"));
+		       /* roleDroplist.data("kendoDropDownList").select(function(dataItem) {
+		            if(role)
+		                return dataItem.value === role.id;
+		        });*/
+		    }
 
 		});
 	</script>
