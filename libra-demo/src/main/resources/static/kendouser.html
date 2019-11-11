@@ -114,7 +114,15 @@
 					},
 					total : function(d) {
 						return d.total;
-					}
+					},
+					model: {
+		                    	id: "id",
+		                   	 fields: {
+		                        "id": { type: "number" }, 
+		                        "sex": {type: "number"},
+		                        "weight": { type: "number" }  
+		                    }
+		                }
 				},
 				serverPaging : true
 			});
@@ -142,6 +150,7 @@
 				}, {
 					field : "weight",
 					title : "Weight",
+					template: '#= kendo.toString(weight, "N3") #',
 					width : 150
 				}, {
 					field : "jobtitle",
